@@ -10,17 +10,15 @@
                   {{#if p.href}}
                     <a class="category-title-link" href={{p.href}}>
                       <div class="category-text-title">
-                        {{#if (theme-setting 'locked_icon')}}
-                          {{d-icon (theme-setting 'locked_icon')}}
-                        {{/if}}
+
+                        {{d-icon p.icon}}
+
                         <span class="category-name">{{p.title}}</span>
                       </div>
                     </a>
                   {{else}}
                     <div class="category-text-title">
-                      {{#if (theme-setting 'locked_icon')}}
-                        {{d-icon (theme-setting 'locked_icon')}}
-                      {{/if}}
+                      {{d-icon p.icon}}
                       <span class="category-name">{{p.title}}</span>
                     </div>
                   {{/if}}
@@ -36,7 +34,12 @@
         </table>
       </div>
     {{else if boxStyle}}
-      <div style={{unless noCategoryStyle (border-color p.color)}} class="category category-box {{if noCategoryStyle "no-category-boxes-style"}} {{p.className}}">
+      <div
+        style={{unless noCategoryStyle (border-color p.color)}}
+        class="category category-box
+          {{if noCategoryStyle 'no-category-boxes-style'}}
+          {{p.className}}"
+      >
         <div class="category-box-inner">
           <div class="category-logo">
             {{#if p.uploaded_logo.url}}
@@ -54,17 +57,13 @@
               {{#if p.href}}
                 <a class="parent-box-link" href={{p.href}}>
                   <h3>
-                    {{#if (theme-setting 'locked_icon')}}
-                      {{d-icon (theme-setting 'locked_icon')}}
-                    {{/if}}
+                    {{d-icon p.icon}}
                     {{p.title}}
                   </h3>
                 </a>
               {{else}}
                 <h3>
-                  {{#if (theme-setting 'locked_icon')}}
-                    {{d-icon (theme-setting 'locked_icon')}}
-                  {{/if}}
+                  {{d-icon p.icon}}
                   {{p.title}}
                 </h3>
               {{/if}}
@@ -79,22 +78,22 @@
       </div>
     {{else}}
       <tr class={{p.className}}>
-        <td colspan=2 class="category {{if noCategoryStyle "no-category-style"}}" style={{unless noCategoryStyle (border-color p.color)}}>
+        <td
+          colspan="2"
+          class="category {{if noCategoryStyle 'no-category-style'}}"
+          style={{unless noCategoryStyle (border-color p.color)}}
+        >
           <h3>
             {{#if p.href}}
               <a class="category-title-link" href={{p.href}}>
                 <div class="category-text-title">
-                  {{#if (theme-setting 'locked_icon')}}
-                    {{d-icon (theme-setting 'locked_icon')}}
-                  {{/if}}
+                  {{d-icon p.icon}}
                   <span class="category-name">{{p.title}}</span>
                 </div>
               </a>
             {{else}}
               <div class="category-text-title">
-                {{#if (theme-setting 'locked_icon')}}
-                  {{d-icon (theme-setting 'locked_icon')}}
-                {{/if}}
+                {{d-icon p.icon}}
                 <span class="category-name">{{p.title}}</span>
               </div>
             {{/if}}
