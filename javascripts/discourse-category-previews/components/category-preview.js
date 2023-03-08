@@ -18,6 +18,8 @@ export default Component.extend({
 
     allCategoryPreviews.forEach((data) => {
       const permittedGroup = data.special_groups ? data.special_groups.split(",") : [];
+      console.log("permittedGroup", permittedGroup);
+      console.log("loggedInUserGroup", loggedInUserGroup);
       const hasCategoryAccess = loggedInUserGroup.some((g) => permittedGroup.indexOf(g) > -1);
       const shouldRender = !loggedInUser || isStaff || !hasCategoryAccess;
       if (shouldRender && categorySlug === data.category_slug) {
