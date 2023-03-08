@@ -63,10 +63,10 @@ categories:
           "type": "string",
           "minLength": 1
         },
-        "specials_groups": {
+        "special_groups": {
           "description": "a comma-separated list of group names",
           "type": "string",
-           "minLength": 1
+          "minLength": 1
         }
       },
       "additionalProperties": false
