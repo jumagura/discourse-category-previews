@@ -2,7 +2,7 @@ import Component from "@ember/component";
 import { equal } from "@ember/object/computed";
 import discourseComputed from "discourse-common/utils/decorators";
 
-const rawCategoryPreviews = settings.category_previews.split("|");
+const allCategoryPreviews = settings.categories ? JSON.parse(settings.categories) : [];
 
 export default Component.extend({
   noCategoryStyle: equal("siteSettings.category_style", "none"),
@@ -12,27 +12,25 @@ export default Component.extend({
   preview() {
     const previewData = [];
     const loggedInUser = this.currentUser;
-    const loggedInUserGroup = loggedInUser ? loggedInUser.groups.map(g => g.name) : [];
+    const loggedInUserGroup = loggedInUser ? loggedInUser.groups.map((g) => g.name) : [];
     const isStaff = loggedInUser ? loggedInUser.staff : false;
     const categorySlug = this.args.category.slug;
 
-    rawCategoryPreviews.forEach(rawPreview => {
-      const previewPart = rawPreview.split("~");
-      const permittedGroup = previewPart[4] ? previewPart[4].split(",") : [];
-      const hasCategoryAccess = loggedInUserGroup.some(g => permittedGroup.indexOf(g) > -1);
+    allCategoryPreviews.forEach((data) => {
+      const permittedGroup = data.special_groups ? data.special_groups.split(",") : [];
+      const hasCategoryAccess = loggedInUserGroup.some((g) => permittedGroup.indexOf(g) > -1);
       const shouldRender = !loggedInUser || isStaff || !hasCategoryAccess;
-
-      if (shouldRender && categorySlug === previewPart[0]) {
+      if (shouldRender && categorySlug === data.category_slug) {
         previewData.push({
-          title: previewPart[1],
-          description: previewPart[2],
-          href: previewPart[3],
+          icon: data.icon,
+          title: data.title,
+          description: data.description,
+          href: data.url,
           className: `above-${categorySlug}`,
-          color: settings.border_color
+          color: settings.border_color,
         });
       }
     });
-
     return previewData;
-  }
+  },
 });
