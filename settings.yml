@@ -1,41 +1,77 @@
 ---
-category_previews:
-  type: list
-  list_type: simple
-  default: ''
-  description:
-    en: 'Each entry should be ~ delimited using the following format:
-        <br><br>
-          <small><b>category-slug~Preview Name~Preview Description~https://example.com~group</b></small>
-        <br><br>
-        <ul>
-          <li>
-            category-slug - the preview will display above this category in the category list. The slug can be found by looking at a category URL: https://example.com/c/<b>category-slug</b>/12
-            <br>
-            <b>IMPORTANT:</b> The category-slug chosen must be from a category that is visible to everyone.
-          </li>
-          <li> Preview Name - the bold, hyperlinked part of the preview</li>
-          <li>
-            Preview Description - displayed under the Preview Name
-          </li>
-          <li>
-            https://example.com - the link that will be attached to the Preview Name
-          </li>
-          <li>
-            group - a comma-separated list of group names. Members of these groups will <b>not</b> see the preview. This should align with the category permission settings of the category being previewed.
-            <br>
-            <b>IMPORTANT:</b> The groups chosen must configured so that the "Who can see this group?" visibility setting is set to "Group owners, member" or less restrictive.
-          </li>
-        </ul>
-
-        There should always be 4 "~" in the entry, but you can choose to exclude values after each "~" to omit one of the above sections
-        <br><br>
-        You can use the same category slug multiple times. When this is done, the previews will display in the order they appear in the setting.'
-locked_icon:
-  type: string
-  default: 'lock'
-  description:
-    en: 'The name of a Font Awesome icon to display before the Preview Name. Leave blank if no icon is need.'
+categories:
+  description: "Top level categories preview list"
+  default: >-
+    [
+      {
+        "icon":"bell",
+        "category_slug":"bottom-cat",
+        "title":"Announcements",
+        "description":"Official Grey Arrows Drone Club Announcements.",
+        "url":"https://greyarro.ws/sorry-members-only",
+        "special_groups":"GADC_Members"
+      },   
+      {
+        "icon":"star",
+        "category_slug":"bottom-cat",
+        "title":"Members Only",
+        "description":"Special deals and content exclusively for GADC members.",
+        "url":"https://greyarro.ws/sorry-members-only",
+        "special_groups":"GADC_Members"
+      },   
+      {
+        "icon":"comments",
+        "category_slug":"bottom-cat",
+        "title":"Droning On...",
+        "description":"The off-topic place to discuss anything and everything.",
+        "url":"https://greyarro.ws/sorry-members-only",
+        "special_groups":"GADC_Members"
+      }   
+    ]
+  json_schema: '
+  {
+    "title": "List of Categories",
+    "description": "Members of `special-groups` will not see the preview since they can access the category",
+    "type": "array",
+    "format": "table",
+    "uniqueItems": false,
+    "items": {
+      "type": "object",
+      "properties": {
+        "icon": {
+          "description": "Icon displayed before preview name",
+          "type": "string",
+          "minLength": 1
+        },
+        "category_slug": {
+          "description": "preview category will be displayed before this category",
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "description": "The bold, hyperlinked part of the preview",
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "description": "displayed under the Preview Name",
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "description": "the link that will be attached to the Preview Name",
+          "type": "string",
+          "minLength": 1
+        },
+        "specials_groups": {
+          "description": "a comma-separated list of group names",
+          "type": "string",
+           "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    }
+  }'
 border_color:
   type: string
   default: '0088CC'
